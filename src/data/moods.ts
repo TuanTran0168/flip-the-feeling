@@ -1,0 +1,68 @@
+import { Mood } from "@/types";
+
+export const moods: Mood[] = [
+  {
+    id: "co-don",
+    label: "Cô đơn",
+    emoji: "🌙",
+    color: "#4C1D95",
+    textColor: "#DDD6FE",
+    description: "Những lúc chỉ muốn ngồi một mình",
+  },
+  {
+    id: "nho-nhung",
+    label: "Nhớ nhung",
+    emoji: "🌊",
+    color: "#1E3A5F",
+    textColor: "#BFDBFE",
+    description: "Nhớ một người, một nơi, một thời",
+  },
+  {
+    id: "dau-long",
+    label: "Đau lòng",
+    emoji: "🥀",
+    color: "#7F1D1D",
+    textColor: "#FECACA",
+    description: "Khi trái tim cần được lắng nghe",
+  },
+  {
+    id: "binh-yen",
+    label: "Bình yên",
+    emoji: "🍃",
+    color: "#064E3B",
+    textColor: "#A7F3D0",
+    description: "Tĩnh lặng, không cần gì thêm",
+  },
+  {
+    id: "vui-ve",
+    label: "Vui vẻ",
+    emoji: "✨",
+    color: "#78350F",
+    textColor: "#FDE68A",
+    description: "Những khoảnh khắc muốn chia sẻ",
+  },
+  {
+    id: "mo-mang",
+    label: "Mơ màng",
+    emoji: "🌸",
+    color: "#4A1D96",
+    textColor: "#E9D5FF",
+    description: "Lang thang trong những suy nghĩ",
+  },
+  {
+    id: "trong-rong",
+    label: "Trống rỗng",
+    emoji: "🌫️",
+    color: "#1F2937",
+    textColor: "#D1D5DB",
+    description: "Khi không biết mình cảm thấy gì",
+  },
+  {
+    id: "hy-vong",
+    label: "Hy vọng",
+    emoji: "🌅",
+    color: "#92400E",
+    textColor: "#FDE68A",
+    description: "Tin vào điều tốt đẹp phía trước",
+  },
+];

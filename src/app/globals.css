@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+html,
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #e8e6f0;
+  touch-action: pan-y;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 2px;
+}
+
+.milky-way {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.22), transparent 18%),
+    radial-gradient(ellipse at 34% 48%, rgba(142, 184, 255, 0.18), transparent 28%),
+    radial-gradient(ellipse at 68% 52%, rgba(255, 216, 166, 0.12), transparent 24%),
+    repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12) 0 1px, transparent 1px 7px);
+  filter: blur(0.4px);
+  mask-image: radial-gradient(ellipse at center, black 0 42%, transparent 72%);
+  animation: galaxy-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes galaxy-drift {
+  from {
+    transform: translate(-50%, -50%) rotate(-18deg) scale(1);
+  }
+  to {
+    transform: translate(-50%, -51.5%) rotate(-16deg) scale(1.04);
+  }
+}
