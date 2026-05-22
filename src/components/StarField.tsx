@@ -605,31 +605,59 @@ export default function StarField() {
       {/* Three.js canvas */}
       <div ref={mountRef} className="absolute inset-0" />
 
-      {/* Artist silhouette — dim, revealed by starlight via screen blend */}
+      {/* Artist silhouettes — positioned near center sides */}
       <div
         className="absolute inset-0"
-        style={{ mixBlendMode: "screen", pointerEvents: "none" }}
+        style={{ pointerEvents: "none" }}
       >
+        {/* Right side — image 2 flipped X */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/bat-performer.jpg"
+          src="/bat-right.jpg"
           alt=""
           draggable={false}
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
           style={{
             position: "absolute",
             bottom: 0,
-            left: "50%",
-            transform: "translateX(-38%)",
-            height: "88vh",
+            right: "12%",
+            height: "85vh",
             width: "auto",
             objectFit: "cover",
             objectPosition: "center top",
-            filter: "brightness(0.18) contrast(1.2) saturate(0.22)",
-            maskImage: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 65%, transparent 88%)",
-            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 65%, transparent 88%)",
+            transform: "scaleX(-1)",
+            opacity: 0.35,
+            filter: "brightness(1.5) contrast(1.3) saturate(0.15)",
+            maskImage: "radial-gradient(ellipse 55% 65% at 50% 45%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse 55% 65% at 50% 45%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)",
             pointerEvents: "none",
             userSelect: "none",
+            animation: "performer-breathe 8s ease-in-out infinite",
+          }}
+        />
+
+        {/* Left side — image 1 */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/bat-left.jpg"
+          alt=""
+          draggable={false}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "12%",
+            height: "85vh",
+            width: "auto",
+            objectFit: "cover",
+            objectPosition: "center top",
+            opacity: 0.28,
+            filter: "brightness(1.3) contrast(1.3) saturate(0.15)",
+            maskImage: "radial-gradient(ellipse 55% 65% at 50% 45%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse 55% 65% at 50% 45%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)",
+            pointerEvents: "none",
+            userSelect: "none",
+            animation: "performer-breathe 8s ease-in-out infinite 4s",
           }}
         />
       </div>

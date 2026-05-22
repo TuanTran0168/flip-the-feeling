@@ -232,6 +232,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
   const [arcOffset, setArcOffset] = useState(7.0);   // float — centre card index
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [flipped, setFlipped] = useState(false);
+  const [showFront, setShowFront] = useState(false);
   const [ready, setReady] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -258,6 +259,8 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
       arcRef.current = index;
       setSelectedIndex(index);
       setTimeout(() => setFlipped(true), 260);
+      // Remove CardBack from DOM after flip animation completes (0.92s)
+      setTimeout(() => setShowFront(true), 260 + 950);
     },
     [ready, shuffling, selectedIndex]
   );
@@ -269,6 +272,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
     setShuffling(true);
     setSelectedIndex(null);
     setFlipped(false);
+    setShowFront(false);
 
     setTimeout(() => {
       setDeck(buildDeck());
@@ -282,6 +286,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
   const handleReset = useCallback(() => {
     setSelectedIndex(null);
     setFlipped(false);
+    setShowFront(false);
   }, []);
 
   // Drag — pointer down
@@ -347,7 +352,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
     ? "Đang triệu hồi vận mệnh..."
     : selectedIndex === null
     ? `Chọn lá bài · cuộn hoặc kéo để xem (${TOTAL} lá)`
-    : flipped
+    : showFront
     ? "Định mệnh đã hiện ra"
     : "Lật bài...";
 
@@ -437,7 +442,8 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
               onClick={() => handleCardClick(index)}
             >
               {/* Gold glow when flipped */}
-              {isSelected && flipped && (
+              {/* Gold glow when front revealed */}
+              {isSelected && showFront && (
                 <div
                   className="absolute inset-0 rounded-[14px] pointer-events-none"
                   style={{ boxShadow: "0 0 52px rgba(233,196,0,0.2), 0 0 100px rgba(233,196,0,0.09)" }}
@@ -465,7 +471,9 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
                     : "0 8px 28px rgba(0,0,0,0.65), 0 2px 6px rgba(0,0,0,0.45)",
                 }}
               >
-                <CardBack />
+                {/* During flip: both faces exist with backfaceVisibility.
+                    After flip completes: CardBack removed from DOM to prevent bleed-through */}
+                {!(isSelected && showFront) && <CardBack />}
                 {isSelected && (
                   <CardFront
                     mood={card.mood}

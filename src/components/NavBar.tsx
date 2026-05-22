@@ -10,9 +10,9 @@ interface NavBarProps {
 }
 
 const TABS: { id: Tab; label: string; icon: string; mobileIcon: string }[] = [
-  { id: "oracle",  label: "Oracle",           icon: "✦", mobileIcon: "✦" },
-  { id: "player",  label: "Celestial Player", icon: "▶", mobileIcon: "▶" },
-  { id: "archive", label: "Archive",          icon: "◈", mobileIcon: "◈" },
+  { id: "oracle", label: "Oracle", icon: "✦", mobileIcon: "✦" },
+  { id: "player", label: "Celestial Player", icon: "▶", mobileIcon: "▶" },
+  { id: "archive", label: "Archive", icon: "◈", mobileIcon: "◈" },
 ];
 
 function OrbitIcon() {
