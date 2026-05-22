@@ -12,10 +12,10 @@ export default function OracleTab({ onSongReveal }: OracleTabProps) {
   return (
     <div
       className="relative flex h-dvh flex-col overflow-hidden text-[var(--cosmic-text)]"
-      style={{ paddingTop: "clamp(60px, 10vw, 80px)" }}
+      style={{ paddingTop: "clamp(16px, 3vw, 80px)" }}
     >
       {/* ── Header ──────────────────────────────────────────────────────────── */}
-      <section className="flex shrink-0 flex-col items-center px-4 pb-1 pt-4 text-center">
+      <section className="flex shrink-0 flex-col items-center px-4 pb-1 pt-1 md:pt-4 text-center">
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

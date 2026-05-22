@@ -217,12 +217,24 @@ export default function PlayerTab({ song, mood, onNewCard, onArchive }: PlayerTa
             <div className="aspect-video">
               <iframe
                 className="w-full h-full"
-                src={`https://www.youtube.com/embed/${song.youtubeId}?rel=0&modestbranding=1`}
+                src={`https://www.youtube.com/embed/${song.youtubeId}?rel=0&modestbranding=1&playsinline=1`}
                 title={song.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                 allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+            {/* Fallback link — always visible for when embed is blocked */}
+            <a
+              href={`https://www.youtube.com/watch?v=${song.youtubeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-2.5 font-[family-name:var(--font-inter)] text-xs tracking-wider transition-colors hover:opacity-80"
+              style={{ color: "rgba(233,196,0,0.6)", background: "rgba(0,0,0,0.4)" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8.001a2.749 2.749 0 0 0-1.935-1.946C18.165 5.5 12 5.5 12 5.5s-6.165 0-7.865.555A2.749 2.749 0 0 0 2.2 8.001 28.9 28.9 0 0 0 1.75 12a28.9 28.9 0 0 0 .45 3.999 2.749 2.749 0 0 0 1.935 1.946C5.835 18.5 12 18.5 12 18.5s6.165 0 7.865-.555a2.749 2.749 0 0 0 1.935-1.946A28.9 28.9 0 0 0 22.25 12a28.9 28.9 0 0 0-.45-3.999ZM9.75 15.02V8.98L15.5 12l-5.75 3.02Z" /></svg>
+              Video không hiện vì bị chặn? Xem trên YouTube →
+            </a>
           </div>
 
           {/* Personal note */}
