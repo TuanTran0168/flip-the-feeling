@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* ── Celestial Echo Design Tokens ─────────────────────────────────────────── */
+:root {
+  --cosmic-bg: #131313;
+  --cosmic-bg-low: #0e0e0e;
+  --cosmic-surface: #1c1b1c;
+  --cosmic-surface-high: #2a2a2a;
+  --cosmic-gold: #e9c400;
+  --cosmic-gold-dim: rgba(233, 196, 0, 0.35);
+  --cosmic-gold-glow: rgba(233, 196, 0, 0.2);
+  --cosmic-purple: #4f3d72;
+  --cosmic-purple-dim: rgba(79, 61, 114, 0.3);
+  --cosmic-text: #e5e2e1;
+  --cosmic-text-muted: #8f9195;
+  --cosmic-text-variant: #c6c6ca;
+  --cosmic-secondary: #d2bcfa;
+}
+
 html,
 body {
   min-height: 100%;
@@ -8,13 +25,30 @@ body {
 }
 
 body {
-  background-color: #0a0a0f;
-  color: #e8e6f0;
+  background-color: transparent;
+  color: var(--cosmic-text);
   touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
 }
 
 * {
   scroll-behavior: smooth;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+iframe {
+  pointer-events: auto;
 }
 
 @media (pointer: fine) {
@@ -28,30 +62,87 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--cosmic-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: var(--cosmic-gold-dim);
   border-radius: 2px;
 }
 
-.milky-way {
-  background:
-    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.22), transparent 18%),
-    radial-gradient(ellipse at 34% 48%, rgba(142, 184, 255, 0.18), transparent 28%),
-    radial-gradient(ellipse at 68% 52%, rgba(255, 216, 166, 0.12), transparent 24%),
-    repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12) 0 1px, transparent 1px 7px);
-  filter: blur(0.4px);
-  mask-image: radial-gradient(ellipse at center, black 0 42%, transparent 72%);
-  animation: galaxy-drift 18s ease-in-out infinite alternate;
+/* ── Glassmorphism utility ─────────────────────────────────────────────────── */
+.glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(28, 27, 28, 0.45);
+  border: 1px solid var(--cosmic-gold-dim);
 }
 
-@keyframes galaxy-drift {
-  from {
-    transform: translate(-50%, -50%) rotate(-18deg) scale(1);
-  }
-  to {
-    transform: translate(-50%, -51.5%) rotate(-16deg) scale(1.04);
-  }
+/* ── Tarot card pattern background ─────────────────────────────────────────── */
+.tarot-pattern {
+  background-image: radial-gradient(rgba(233, 196, 0, 0.08) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+/* ── Animations ────────────────────────────────────────────────────────────── */
+@keyframes orbit-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(233, 196, 0, 0.15), 0 0 0 1px rgba(233, 196, 0, 0.2); }
+  50%       { box-shadow: 0 0 22px rgba(233, 196, 0, 0.4),  0 0 0 1px rgba(233, 196, 0, 0.5); }
+}
+.orbit-glow {
+  animation: orbit-glow 3s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1; }
+}
+.animate-subtle-pulse {
+  animation: subtle-pulse 6s ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ── Tarot card hover ──────────────────────────────────────────────────────── */
+.tarot-card-hover {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.tarot-card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 28px rgba(233, 196, 0, 0.18);
+  border-color: rgba(233, 196, 0, 0.65) !important;
+}
+
+/* ── Orbital Button ────────────────────────────────────────────────────────── */
+.btn-orbital {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--cosmic-gold-dim);
+  background: rgba(19, 19, 19, 0.8);
+  color: var(--cosmic-text);
+  transition: all 0.3s ease;
+}
+.btn-orbital:hover:not(:disabled) {
+  border-color: var(--cosmic-gold);
+  box-shadow: 0 0 20px var(--cosmic-gold-glow), inset 0 0 12px rgba(233, 196, 0, 0.06);
+  color: var(--cosmic-gold);
+}
+.btn-orbital:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Constellation progress bar ────────────────────────────────────────────── */
+.progress-track {
+  background: rgba(233, 196, 0, 0.1);
+}
+.progress-fill {
+  background: rgba(233, 196, 0, 0.6);
+}
+.progress-star {
+  background: var(--cosmic-gold);
+  box-shadow: 0 0 8px var(--cosmic-gold), 0 0 16px rgba(233, 196, 0, 0.5);
 }

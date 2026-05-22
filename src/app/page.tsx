@@ -1,55 +1,82 @@
 "use client";
 
-import { motion } from "framer-motion";
-import CardFan from "@/components/CardFan";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import NavBar, { Tab } from "@/components/NavBar";
+import OracleTab from "@/components/tabs/OracleTab";
+import PlayerTab from "@/components/tabs/PlayerTab";
+import ArchiveTab from "@/components/tabs/ArchiveTab";
+import { Song, Mood } from "@/types";
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<Tab>("oracle");
+  const [currentSong, setCurrentSong] = useState<Song | null>(null);
+  const [currentMood, setCurrentMood] = useState<Mood | null>(null);
+
+  const handleSongReveal = (song: Song, mood: Mood) => {
+    setCurrentSong(song);
+    setCurrentMood(mood);
+    setActiveTab("player");
+  };
+
+  const handlePlayFromArchive = (song: Song, mood: Mood) => {
+    setCurrentSong(song);
+    setCurrentMood(mood);
+    setActiveTab("player");
+  };
+
   return (
-    <main className="relative flex h-dvh flex-col overflow-hidden px-4 text-[#e8e6f0]">
-      <section className="flex shrink-0 flex-col items-center px-2 pb-1 pt-5 text-center sm:pt-7 md:pt-8">
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-2 font-[family-name:var(--font-inter)] text-[10px] uppercase tracking-[0.36em] text-[#8c96ad] sm:text-xs"
-        >
-          Bùi Anh Tuấn x Your Feelings
-        </motion.p>
+    <main className="relative h-dvh overflow-hidden">
+      <NavBar activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.05 }}
-          className="mb-1 font-[family-name:var(--font-playfair)] text-[12px] italic tracking-[0.18em] text-[#6d7488] sm:text-sm"
-        >
-          Trần Đăng Tuấn
-        </motion.p>
+      <AnimatePresence mode="wait">
+        {activeTab === "oracle" && (
+          <motion.div
+            key="oracle"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <OracleTab onSongReveal={handleSongReveal} />
+          </motion.div>
+        )}
 
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mb-2 font-[family-name:var(--font-playfair)] text-[clamp(2.9rem,6.4vw,5.8rem)] font-semibold leading-[0.92] tracking-[0.01em] text-[#f1eef8]"
-          style={{
-            textShadow: "0 2px 18px rgba(8,10,22,0.9), 0 0 32px rgba(130,155,220,0.18)",
-          }}
-        >
-          Flip the Feeling
-        </motion.h1>
+        {activeTab === "player" && (
+          <motion.div
+            key="player"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <PlayerTab
+              song={currentSong}
+              mood={currentMood}
+              onNewCard={() => setActiveTab("oracle")}
+              onArchive={() => setActiveTab("archive")}
+            />
+          </motion.div>
+        )}
 
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="max-w-md font-[family-name:var(--font-inter)] text-sm leading-relaxed text-[#aeb6c8] sm:text-[15px]"
-        >
-          Lật thẻ để khám phá bài hát cho cảm xúc của bạn
-        </motion.p>
-      </section>
-
-      <section className="flex min-h-0 flex-1 items-center justify-center">
-        <CardFan />
-      </section>
+        {activeTab === "archive" && (
+          <motion.div
+            key="archive"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <ArchiveTab
+              onPlaySong={handlePlayFromArchive}
+              onNewCard={() => setActiveTab("oracle")}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

@@ -16,6 +16,11 @@ type Meteor = {
   offset: number;
 };
 
+type CStarData = {
+  sprite: THREE.Sprite;
+  basePos: THREE.Vector3;
+};
+
 function makeCircleTexture() {
   const canvas = document.createElement("canvas");
   canvas.width = 64;
@@ -32,6 +37,24 @@ function makeCircleTexture() {
 
   context.fillStyle = gradient;
   context.fillRect(0, 0, 64, 64);
+
+  return new THREE.CanvasTexture(canvas);
+}
+
+function makeConstellationStarTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 48;
+  canvas.height = 48;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  const grad = ctx.createRadialGradient(24, 24, 0, 24, 24, 24);
+  grad.addColorStop(0, "rgba(255,230,140,1)");
+  grad.addColorStop(0.25, "rgba(255,210,100,0.72)");
+  grad.addColorStop(0.55, "rgba(240,180,60,0.22)");
+  grad.addColorStop(1, "rgba(200,150,40,0)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 48, 48);
 
   return new THREE.CanvasTexture(canvas);
 }
@@ -234,7 +257,7 @@ function createOrbitRings() {
       new THREE.LineDashedMaterial({
         color: ["#7b40ff", "#00b7df", "#ff8b21", "#b750ff", "#2d6cff", "#e4592a", "#6dd3ff"][index],
         transparent: true,
-        opacity: index < 4 ? 0.44 : 0.3,
+        opacity: index < 4 ? 0.62 : 0.46,
         dashSize: 2.2 + index * 0.35,
         gapSize: 1.8 + index * 0.2,
         blending: THREE.AdditiveBlending,
@@ -252,8 +275,8 @@ function createOrbitRings() {
 function createSolarCore(texture: THREE.Texture | null) {
   const group = new THREE.Group();
   const core = new THREE.Mesh(
-    new THREE.SphereGeometry(2.1, 48, 48),
-    new THREE.MeshBasicMaterial({ color: "#fffaf1", transparent: true, opacity: 1 })
+    new THREE.SphereGeometry(3.2, 48, 48),
+    new THREE.MeshBasicMaterial({ color: "#fff8e8", transparent: true, opacity: 1 })
   );
   const makeHalo = (color: string, opacity: number, scale: number) => {
     const halo = new THREE.Sprite(
@@ -272,9 +295,9 @@ function createSolarCore(texture: THREE.Texture | null) {
 
   const position = new THREE.Vector3(-4, -2, -38);
   core.position.copy(position);
-  const blueHalo = makeHalo("#9094ff", 0.7, 28);
-  const goldHalo = makeHalo("#f0c544", 0.42, 46);
-  const redHalo = makeHalo("#c84d35", 0.22, 76);
+  const blueHalo = makeHalo("#9094ff", 0.85, 42);
+  const goldHalo = makeHalo("#f0c544", 0.56, 68);
+  const redHalo = makeHalo("#c84d35", 0.34, 106);
   blueHalo.position.copy(position);
   goldHalo.position.copy(position);
   redHalo.position.copy(position);
@@ -311,6 +334,67 @@ function createMeteors() {
   return meteors;
 }
 
+// ── Constellation definitions ─────────────────────────────────────────────────
+
+const CONSTELLATION_DEFS: { stars: [number, number, number][]; lines: [number, number][] }[] = [
+  // Celestial Crown — top center
+  { stars: [[-3,28,-52],[4,32,-52],[9,28,-52],[6,23,-52],[0,23,-52]], lines: [[0,1],[1,2],[2,3],[3,4],[4,0]] },
+  // The Hunter — upper right
+  { stars: [[24,22,-50],[20,18,-50],[26,18,-50],[22,13,-50],[24,9,-50],[20,7,-50],[28,7,-50]], lines: [[0,1],[0,2],[1,3],[2,3],[3,4],[4,5],[4,6]] },
+  // The Lyre — upper left
+  { stars: [[-24,25,-48],[-20,22,-48],[-28,22,-48],[-22,17,-48],[-26,17,-48]], lines: [[0,1],[0,2],[1,3],[2,4],[3,4]] },
+  // The Arrow — lower right
+  { stars: [[30,-10,-55],[24,-10,-55],[18,-10,-55],[20,-7,-55],[20,-13,-55]], lines: [[0,1],[1,2],[2,3],[2,4]] },
+  // The Vessel — lower left
+  { stars: [[-32,-8,-50],[-28,-12,-50],[-24,-8,-50],[-28,-4,-50],[-26,-15,-50],[-30,-15,-50]], lines: [[0,1],[1,2],[2,3],[3,0],[1,4],[1,5],[4,5]] },
+  // Southern Cross — far left
+  { stars: [[-38,2,-52],[-38,8,-52],[-38,-4,-52],[-35,2,-52],[-41,2,-52]], lines: [[0,1],[0,2],[0,3],[0,4]] },
+  // The Triangle — top right
+  { stars: [[15,30,-49],[20,26,-49],[10,26,-49]], lines: [[0,1],[1,2],[2,0]] },
+];
+
+function createConstellations(cStarTex: THREE.Texture | null) {
+  const group = new THREE.Group();
+  const cStars: CStarData[] = [];
+  const cLines: THREE.Line[] = [];
+
+  CONSTELLATION_DEFS.forEach((def) => {
+    const positions = def.stars.map(([x, y, z]) => new THREE.Vector3(x, y, z));
+
+    positions.forEach((pos) => {
+      const mat = new THREE.SpriteMaterial({
+        map: cStarTex ?? undefined,
+        transparent: true,
+        opacity: 0.55,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        color: new THREE.Color("#ffd080"),
+      });
+      const sprite = new THREE.Sprite(mat);
+      sprite.scale.set(1.8, 1.8, 1);
+      sprite.position.copy(pos);
+      group.add(sprite);
+      cStars.push({ sprite, basePos: pos.clone() });
+    });
+
+    def.lines.forEach(([a, b]) => {
+      const lineGeo = new THREE.BufferGeometry().setFromPoints([positions[a], positions[b]]);
+      const lineMat = new THREE.LineBasicMaterial({
+        color: new THREE.Color("#9070d8"),
+        transparent: true,
+        opacity: 0.18,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const line = new THREE.Line(lineGeo, lineMat);
+      group.add(line);
+      cLines.push(line);
+    });
+  });
+
+  return { group, cStars, cLines };
+}
+
 export default function StarField() {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -332,6 +416,8 @@ export default function StarField() {
 
     const texture = makeCircleTexture();
     const galaxyTexture = makeGalaxyTexture();
+    const cStarTex = makeConstellationStarTexture();
+
     const root = new THREE.Group();
     const stars = createStarField(texture);
     const milkyWay = createMilkyWay(texture);
@@ -340,17 +426,57 @@ export default function StarField() {
     const rings = createOrbitRings();
     const solarCore = createSolarCore(texture);
     const meteors = createMeteors();
+    const { group: constellationGroup, cStars, cLines } = createConstellations(cStarTex);
 
-    root.add(stars, galaxyPlane, milkyWay, asteroidBelt, rings, solarCore, ...meteors.map((meteor) => meteor.mesh));
+    root.add(stars, galaxyPlane, milkyWay, asteroidBelt, rings, solarCore, constellationGroup, ...meteors.map((m) => m.mesh));
     scene.add(root);
 
     const mouse = new THREE.Vector2(0, 0);
     const target = new THREE.Vector2(0, 0);
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
+    let prevTime = performance.now();
+
+    const dragRot = { x: 0, y: 0 };
+    let isDragging = false;
+    let lastDragX = 0;
+    let lastDragY = 0;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const el = event.target as Element;
+      if (el.closest('button, a, input, select, [role="button"]')) return;
+      isDragging = true;
+      lastDragX = event.clientX;
+      lastDragY = event.clientY;
+    };
+
+    const handlePointerUp = () => { isDragging = false; };
 
     const handlePointerMove = (event: PointerEvent) => {
-      target.x = (event.clientX / window.innerWidth - 0.5) * 2;
-      target.y = (event.clientY / window.innerHeight - 0.5) * 2;
+      if (isDragging) {
+        dragRot.y += (event.clientX - lastDragX) * 0.006;
+        dragRot.x += (event.clientY - lastDragY) * 0.003;
+        dragRot.x = Math.max(-1.4, Math.min(1.4, dragRot.x));
+        lastDragX = event.clientX;
+        lastDragY = event.clientY;
+      } else {
+        target.x = (event.clientX / window.innerWidth - 0.5) * 2;
+        target.y = (event.clientY / window.innerHeight - 0.5) * 2;
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      isDragging = true;
+      lastDragX = event.touches[0].clientX;
+      lastDragY = event.touches[0].clientY;
+    };
+    const handleTouchEnd = () => { isDragging = false; };
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!isDragging) return;
+      dragRot.y += (event.touches[0].clientX - lastDragX) * 0.006;
+      dragRot.x += (event.touches[0].clientY - lastDragY) * 0.003;
+      dragRot.x = Math.max(-1.4, Math.min(1.4, dragRot.x));
+      lastDragX = event.touches[0].clientX;
+      lastDragY = event.touches[0].clientY;
     };
 
     const handleResize = () => {
@@ -359,19 +485,27 @@ export default function StarField() {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
+    window.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("resize", handleResize);
 
+    const tmpVec3 = new THREE.Vector3();
     let animationId = 0;
 
     const animate = () => {
       animationId = window.requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
-      const delta = clock.getDelta();
+      const now = performance.now();
+      const elapsed = (now - startTime) / 1000;
+      const delta = (now - prevTime) / 1000;
+      prevTime = now;
 
       mouse.lerp(target, 0.035);
-      root.rotation.y = mouse.x * 0.09 + elapsed * 0.032;
-      root.rotation.x = -mouse.y * 0.045 + Math.sin(elapsed * 0.3) * 0.018;
+      root.rotation.y = dragRot.y + mouse.x * 0.09 + elapsed * 0.032;
+      root.rotation.x = dragRot.x - mouse.y * 0.045 + Math.sin(elapsed * 0.3) * 0.018;
       galaxyPlane.rotation.z = -0.28 + Math.sin(elapsed * 0.08) * 0.018;
       milkyWay.rotation.z = -0.32 + Math.sin(elapsed * 0.14) * 0.018;
       stars.rotation.z += delta * 0.003;
@@ -390,6 +524,28 @@ export default function StarField() {
         meteor.mesh.scale.setScalar(0.8 + index * 0.08);
       });
 
+      // ── Constellation mouse-proximity glow ────────────────────────────────
+      const mouseScreenX = (mouse.x * 0.5 + 0.5) * window.innerWidth;
+      const mouseScreenY = (-mouse.y * 0.5 + 0.5) * window.innerHeight;
+
+      cStars.forEach((cStar, i) => {
+        cStar.sprite.getWorldPosition(tmpVec3);
+        tmpVec3.project(camera);
+        const sx = (tmpVec3.x * 0.5 + 0.5) * window.innerWidth;
+        const sy = (-tmpVec3.y * 0.5 + 0.5) * window.innerHeight;
+        const dist = Math.sqrt((sx - mouseScreenX) ** 2 + (sy - mouseScreenY) ** 2);
+        const proximity = Math.max(0, 1 - dist / 140);
+        const twinkle = 0.48 + 0.16 * Math.sin(elapsed * 1.7 + cStar.basePos.x * 0.38 + i * 0.4);
+        const mat = cStar.sprite.material as THREE.SpriteMaterial;
+        mat.opacity = Math.min(0.95, twinkle + proximity * 0.52);
+        cStar.sprite.scale.setScalar(1.8 + proximity * 2.2);
+      });
+
+      cLines.forEach((line, i) => {
+        const mat = line.material as THREE.LineBasicMaterial;
+        mat.opacity = 0.16 + 0.09 * Math.sin(elapsed * 0.65 + i * 0.6);
+      });
+
       const orbitX = Math.sin(elapsed * 0.16) * 4.8;
       const orbitY = Math.cos(elapsed * 0.13) * 2.4;
       const orbitZ = 40 + Math.sin(elapsed * 0.11) * 4;
@@ -405,7 +561,12 @@ export default function StarField() {
 
     return () => {
       window.cancelAnimationFrame(animationId);
+      window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("resize", handleResize);
       mount.removeChild(renderer.domElement);
 
@@ -425,12 +586,14 @@ export default function StarField() {
 
       texture?.dispose();
       galaxyTexture?.dispose();
+      cStarTex?.dispose();
       renderer.dispose();
     };
   }, []);
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#030511]">
+      {/* Nebula gradients */}
       <div
         className="absolute inset-0"
         style={{
@@ -438,7 +601,40 @@ export default function StarField() {
             "radial-gradient(circle at 18% 24%, rgba(52,70,165,0.18), transparent 28%), radial-gradient(circle at 72% 18%, rgba(255,187,112,0.08), transparent 22%), radial-gradient(circle at 52% 76%, rgba(86,255,214,0.05), transparent 31%)",
         }}
       />
+
+      {/* Three.js canvas */}
       <div ref={mountRef} className="absolute inset-0" />
+
+      {/* Artist silhouette — dim, revealed by starlight via screen blend */}
+      <div
+        className="absolute inset-0"
+        style={{ mixBlendMode: "screen", pointerEvents: "none" }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/bat-performer.jpg"
+          alt=""
+          draggable={false}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-38%)",
+            height: "88vh",
+            width: "auto",
+            objectFit: "cover",
+            objectPosition: "center top",
+            filter: "brightness(0.18) contrast(1.2) saturate(0.22)",
+            maskImage: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 65%, transparent 88%)",
+            WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 65%, transparent 88%)",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        />
+      </div>
+
+      {/* Grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.035]"
         style={{
