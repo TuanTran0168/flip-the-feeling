@@ -128,16 +128,34 @@ export default function NavBar({ activeTab, onTabChange }: NavBarProps) {
 
               <motion.span
                 animate={{
-                  scale: isActive ? 1.45 : 1,
+                  scale: isActive ? 1.3 : 1,
                   filter: isActive
                     ? "drop-shadow(0 0 8px rgba(233,196,0,0.9)) drop-shadow(0 0 16px rgba(233,196,0,0.4))"
                     : "none",
                 }}
                 transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="relative z-10 font-[family-name:var(--font-playfair)] text-xl leading-none"
+                className="relative z-10 leading-none"
                 style={{ color: isActive ? "var(--cosmic-gold)" : "var(--cosmic-text-muted)" }}
               >
-                {mobileIcon}
+                {id === "oracle" && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.4 7.2H22l-6.2 4.5 2.4 7.3L12 16.5 5.8 21l2.4-7.3L2 9.2h7.6z" />
+                  </svg>
+                )}
+                {id === "player" && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3a9 9 0 0 1 0 18 7 7 0 0 1 0-14 5 5 0 0 1 0 10" fill="none" />
+                    <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
+                  </svg>
+                )}
+                {id === "archive" && (
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2 4.5 4.9.7-3.5 3.4.8 4.9L12 13.2 7.8 15.5l.8-4.9L5.1 7.2 10 6.5z" opacity="0.9" />
+                    <circle cx="5" cy="18" r="1.2" opacity="0.5" />
+                    <circle cx="19" cy="18" r="1.2" opacity="0.5" />
+                    <circle cx="12" cy="20" r="1" opacity="0.35" />
+                  </svg>
+                )}
               </motion.span>
 
               <motion.span

@@ -613,6 +613,7 @@ export default function StarField() {
         {/* Right side — image 2 flipped X */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          className="performer-right"
           src="/bat-right.jpg"
           alt=""
           draggable={false}
@@ -639,6 +640,7 @@ export default function StarField() {
         {/* Left side — image 1 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          className="performer-left"
           src="/bat-left.jpg"
           alt=""
           draggable={false}

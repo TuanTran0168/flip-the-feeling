@@ -158,6 +158,33 @@ iframe {
   }
 }
 
+/* ── Performer responsive ─────────────────────────────────────────────────── */
+.performer-right {
+  /* desktop defaults set inline */
+}
+
+.performer-left {
+  /* desktop defaults set inline */
+}
+
+@media (max-width: 768px) {
+  .performer-right,
+  .performer-left {
+    height: 40vh !important;
+    opacity: 0.2 !important;
+    bottom: auto !important;
+    top: 12% !important;
+  }
+
+  .performer-right {
+    right: -8% !important;
+  }
+
+  .performer-left {
+    left: -8% !important;
+  }
+}
+
 /* ── Tarot card hover ──────────────────────────────────────────────────────── */
 .tarot-card-hover {
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
