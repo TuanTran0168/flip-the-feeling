@@ -238,7 +238,7 @@ export default function PlayerTab({ song, mood, onNewCard, onArchive }: PlayerTa
           </div>
 
           {/* Personal note */}
-          {song.personalNote && song.personalNote !== "TODO" && (
+          {song.personalNote && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

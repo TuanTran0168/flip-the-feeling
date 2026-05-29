@@ -155,7 +155,7 @@ function CardBack() {
 // ── Card Front ──────────────────────────────────────────────────────────────
 
 function CardFront({ mood, song, onPlay }: { mood: Mood; song: Song | null; onPlay?: () => void }) {
-  const hasLink = song && song.youtubeId !== "TODO_YOUTUBE_ID";
+  const hasLink = !!song;
 
   return (
     <div
@@ -491,6 +491,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
           <>
             {arcOffset > 0.5 && (
               <button
+                aria-label="Lá bài trước"
                 className="absolute left-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-7 h-7 rounded-full transition-opacity opacity-40 hover:opacity-90"
                 style={{ background: "rgba(0,0,0,0.55)", border: "1px solid rgba(233,196,0,0.25)", color: "rgba(233,196,0,0.9)", fontSize: 12 }}
                 onClick={(e) => { e.stopPropagation(); const t = Math.max(0, Math.round(arcOffset) - 1); arcRef.current = t; setArcOffset(t); }}
@@ -500,6 +501,7 @@ export default function CardFan({ onSongReveal }: CardFanProps) {
             )}
             {arcOffset < TOTAL - 1.5 && (
               <button
+                aria-label="Lá bài tiếp theo"
                 className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-7 h-7 rounded-full transition-opacity opacity-40 hover:opacity-90"
                 style={{ background: "rgba(0,0,0,0.55)", border: "1px solid rgba(233,196,0,0.25)", color: "rgba(233,196,0,0.9)", fontSize: 12 }}
                 onClick={(e) => { e.stopPropagation(); const t = Math.min(TOTAL - 1, Math.round(arcOffset) + 1); arcRef.current = t; setArcOffset(t); }}

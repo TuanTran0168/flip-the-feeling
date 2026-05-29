@@ -175,7 +175,9 @@ export default function ArchiveTab({ onPlaySong, onNewCard }: ArchiveTabProps) {
                       style={{ background: "linear-gradient(to right, rgba(233,196,0,0.45), transparent)" }}
                     />
                     <button
-                      className="flex items-center gap-2 font-[family-name:var(--font-inter)] text-xs transition-colors"
+                      aria-label={`Nghe lại ${song.title}`}
+                      onClick={(e) => { e.stopPropagation(); onPlaySong(song, entryMood); }}
+                      className="flex items-center gap-2 font-[family-name:var(--font-inter)] text-xs transition-colors hover:opacity-80"
                       style={{ color: "var(--cosmic-text-muted)" }}
                     >
                       ▶&nbsp;Nghe Lại
@@ -230,6 +232,7 @@ export default function ArchiveTab({ onPlaySong, onNewCard }: ArchiveTabProps) {
       {!isEmpty && (
         <div className="md:hidden fixed bottom-24 right-4 z-40 flex flex-col gap-2">
           <button
+            aria-label="Cuộn lên đầu"
             onClick={() => scrollTo("top")}
             className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity active:scale-90"
             style={{
@@ -243,6 +246,7 @@ export default function ArchiveTab({ onPlaySong, onNewCard }: ArchiveTabProps) {
             ▲
           </button>
           <button
+            aria-label="Cuộn xuống cuối"
             onClick={() => scrollTo("bottom")}
             className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity active:scale-90"
             style={{

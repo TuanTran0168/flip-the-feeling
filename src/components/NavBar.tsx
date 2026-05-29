@@ -46,6 +46,7 @@ export default function NavBar({ activeTab, onTabChange }: NavBarProps) {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <button
+            aria-label="Về trang Oracle"
             onClick={() => onTabChange("oracle")}
             className="flex items-center font-[family-name:var(--font-playfair)] tracking-[0.32em] uppercase select-none transition-all duration-300 hover:opacity-85"
             style={{ color: "var(--cosmic-gold)", fontSize: 16, background: "none", border: "none", cursor: "pointer", padding: 0 }}
