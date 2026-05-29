@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vận Mệnh Âm Nhạc - TUANIVERSE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-container": "#c1abe8",
+                        "secondary-fixed-dim": "#d2bcfa",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "outline": "#8f9195",
+                        "on-secondary-fixed": "#231043",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#e9c400",
+                        "on-background": "#e5e2e1",
+                        "on-secondary": "#38265a",
+                        "surface-bright": "#3a3939",
+                        "primary-fixed-dim": "#c5c6cb",
+                        "secondary-container": "#4f3d72",
+                        "secondary": "#d2bcfa",
+                        "tertiary-container": "#0a0700",
+                        "on-primary-fixed": "#191c1f",
+                        "on-tertiary-fixed": "#221b00",
+                        "on-primary-fixed-variant": "#44474b",
+                        "surface-container-highest": "#353435",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed": "#e1e2e7",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#05070a",
+                        "surface-container-low": "#1c1b1c",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "on-tertiary-container": "#8e7700",
+                        "on-primary": "#2e3134",
+                        "surface": "#131313",
+                        "tertiary": "#e9c400",
+                        "on-tertiary": "#3a3000",
+                        "inverse-primary": "#5c5e63",
+                        "error": "#ffb4ab",
+                        "surface-container": "#201f20",
+                        "on-surface-variant": "#c6c6ca",
+                        "tertiary-fixed": "#ffe16d",
+                        "primary": "#c5c6cb",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#4f3d72",
+                        "on-primary-container": "#76787d",
+                        "outline-variant": "#45474a",
+                        "secondary-fixed": "#ebddff",
+                        "surface-tint": "#c5c6cb",
+                        "error-container": "#93000a",
+                        "surface-variant": "#353435"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "max-width": "1440px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": [
+                            "Playfair Display"
+                        ],
+                        "headline-md": [
+                            "Playfair Display"
+                        ],
+                        "headline-lg-mobile": [
+                            "Playfair Display"
+                        ],
+                        "label-caps": [
+                            "Inter"
+                        ],
+                        "headline-sm": [
+                            "Playfair Display"
+                        ],
+                        "body-md": [
+                            "Inter"
+                        ],
+                        "headline-lg": [
+                            "Playfair Display"
+                        ],
+                        "body-lg": [
+                            "Inter"
+                        ]
+                    },
+                    "fontSize": {
+                        "display-lg": [
+                            "64px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-md": [
+                            "32px",
+                            {
+                                "lineHeight": "1.3",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "headline-lg-mobile": [
+                            "32px",
+                            {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "label-caps": [
+                            "12px",
+                            {
+                                "lineHeight": "1.0",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "headline-sm": [
+                            "24px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "headline-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Mystic Cosmic Background Effects */
+        .cosmic-bg {
+            background: radial-gradient(circle at 20% 50%, rgba(79, 61, 114, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 30%, rgba(233, 196, 0, 0.05) 0%, transparent 40%),
+                        #131313;
+        }
+        
+        /* Simulated 3D Orbit Elements (CSS fallback for Three.js requirement in prompt) */
+        .orbit-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px dashed rgba(233, 196, 0, 0.1);
+            animation: spin 120s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orbit-container-2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1200px;
+            height: 1200px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px dashed rgba(233, 196, 0, 0.05);
+            animation: spin-reverse 180s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .planet {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: #e9c400;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(233, 196, 0, 0.8);
+        }
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ffe16d 0%, rgba(233, 196, 0, 0.2) 70%, transparent 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 100px rgba(233, 196, 0, 0.4);
+            z-index: 0;
+        }
+
+        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+        /* Tarot Cards Animation */
+        .tarot-deck {
+            perspective: 1000px;
+        }
+        .tarot-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-origin: bottom center;
+        }
+        .tarot-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 0 30px rgba(233, 196, 0, 0.3);
+            z-index: 10;
+        }
+        .card-center { transform: rotate(0deg); z-index: 3; }
+        .card-left { transform: rotate(-15deg) translateX(-20px); z-index: 2; }
+        .card-right { transform: rotate(15deg) translateX(20px); z-index: 2; }
+        .card-bottom { transform: translateY(40px) scale(0.9); z-index: 1; opacity: 0.8; }
+        
+        .tarot-pattern {
+            background-image: radial-gradient(rgba(233, 196, 0, 0.1) 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(30, 30, 35, 0.4);
+            border: 1px solid rgba(233, 196, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen cosmic-bg selection:bg-tertiary/30 selection:text-tertiary-fixed">
+<!-- CSS Simulated Solar System Background (Replacing Three.js for direct HTML output) -->
+<div class="sun"></div>
+<div class="orbit-container">
+<div class="planet" style="top: 0; left: 50%;"></div>
+<div class="planet" style="top: 50%; left: 100%; width: 12px; height: 12px; background-color: #c1abe8; box-shadow: 0 0 15px rgba(193, 171, 232, 0.8);"></div>
+</div>
+<div class="orbit-container-2">
+<div class="planet" style="top: 80%; left: 10%; width: 6px; height: 6px; background-color: #e5e2e1;"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop py-base bg-transparent backdrop-blur-sm transition-all duration-500 ease-in-out hidden md:flex">
+<div class="flex items-center gap-4">
+<img alt="TUANIVERSE Logo" class="h-10 w-10 object-contain rounded-md" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<span class="font-display-lg text-headline-sm text-tertiary tracking-widest uppercase">TUANIVERSE</span>
+</div>
+<nav class="flex items-center gap-8 mx-auto absolute left-1/2 -translate-x-1/2">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors hover:backdrop-blur-2xl hover:bg-surface-bright/10 px-4 py-2 rounded-lg font-headline-sm text-headline-sm text-tertiary border-b-2 border-tertiary pb-1" href="#">Oracle</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors hover:backdrop-blur-2xl hover:bg-surface-bright/10 px-4 py-2 rounded-lg font-body-md text-body-md" href="#">Celestial Player</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors hover:backdrop-blur-2xl hover:bg-surface-bright/10 px-4 py-2 rounded-lg font-body-md text-body-md" href="#">Archive</a>
+</nav>
+<div class="w-[150px]"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-24 md:pt-32 px-margin-mobile md:px-margin-desktop min-h-screen flex flex-col items-center justify-center pb-32">
+<!-- Header Text -->
+<div class="text-center mb-16 max-w-2xl mx-auto flex flex-col items-center relative">
+<p class="font-label-caps text-label-caps tracking-[0.3em] text-on-surface-variant/80 mb-4 uppercase">Bùi Anh Tuấn x Your Feelings</p>
+<p class="font-display-lg text-headline-sm italic text-tertiary/60 mb-2">Trần Đăng Tuấn</p>
+<h1 class="font-display-lg text-display-lg md:text-[80px] text-on-surface mb-6 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">Vận Mệnh Âm Nhạc</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Lật thẻ để khám phá bài hát cho cảm xúc của bạn</p>
+</div>
+<!-- Interactive Tarot Deck -->
+<div class="relative h-80 w-full max-w-md mx-auto flex justify-center items-end mb-16 tarot-deck">
+<!-- Bottom Stack Card -->
+<div class="absolute bottom-0 w-32 h-48 rounded-xl bg-error-container border border-tertiary/30 shadow-[0_0_15px_rgba(147,0,10,0.5)] tarot-card card-bottom overflow-hidden flex items-center justify-center tarot-pattern">
+<div class="absolute inset-1 border border-tertiary/20 rounded-lg"></div>
+</div>
+<!-- Left Card -->
+<div class="absolute bottom-10 w-40 h-56 rounded-xl bg-error-container border border-tertiary/40 shadow-[0_0_20px_rgba(147,0,10,0.6)] tarot-card card-left overflow-hidden flex flex-col items-center justify-center p-2 cursor-pointer tarot-pattern">
+<div class="absolute inset-1 border border-tertiary/30 rounded-lg"></div>
+<span class="material-symbols-outlined text-tertiary/40 text-4xl mb-2" data-icon="stars">stars</span>
+<span class="font-label-caps text-[10px] text-tertiary/60 tracking-widest">FTF</span>
+</div>
+<!-- Right Card -->
+<div class="absolute bottom-10 w-40 h-56 rounded-xl bg-error-container border border-tertiary/40 shadow-[0_0_20px_rgba(147,0,10,0.6)] tarot-card card-right overflow-hidden flex flex-col items-center justify-center p-2 cursor-pointer tarot-pattern">
+<div class="absolute inset-1 border border-tertiary/30 rounded-lg"></div>
+<span class="material-symbols-outlined text-tertiary/40 text-4xl mb-2" data-icon="stars">stars</span>
+<span class="font-label-caps text-[10px] text-tertiary/60 tracking-widest">FTF</span>
+</div>
+<!-- Center (Top) Card -->
+<div class="absolute bottom-12 w-44 h-64 rounded-xl bg-error-container border-2 border-tertiary/50 shadow-[0_0_30px_rgba(147,0,10,0.8)] tarot-card card-center overflow-hidden flex flex-col items-center justify-center p-2 cursor-pointer z-10 hover:border-tertiary tarot-pattern">
+<div class="absolute inset-1.5 border border-tertiary/40 rounded-lg"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 mix-blend-overlay"></div>
+<span class="material-symbols-outlined text-tertiary/70 text-5xl mb-3 drop-shadow-[0_0_8px_rgba(233,196,0,0.5)]" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-caps text-xs text-tertiary/80 tracking-[0.2em]">FTF</span>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col items-center gap-6 z-20">
+<p class="font-body-md text-body-md text-on-surface-variant/70">Bấm vào 1 lá để lật</p>
+<button class="glass-panel px-8 py-4 rounded-full flex items-center gap-3 hover:bg-surface-bright/30 transition-all duration-300 group hover:shadow-[0_0_20px_rgba(233,196,0,0.2)] hover:border-tertiary/50">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center group-hover:border-tertiary transition-colors">
+<span class="material-symbols-outlined text-sm text-on-surface" data-icon="spades">playing_cards</span>
+</div>
+<span class="font-headline-sm text-body-lg font-semibold tracking-wide text-on-surface group-hover:text-tertiary transition-colors">Xáo bài</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 md:hidden bg-background/80 backdrop-blur-2xl border-t border-tertiary/30 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] rounded-t-xl pb-safe">
+<a class="flex flex-col items-center justify-center text-tertiary drop-shadow-[0_0_8px_rgba(233,196,0,0.6)] active:scale-110 duration-300" href="#">
+<span class="material-symbols-outlined fill mb-1" data-icon="flare">flare</span>
+<span class="font-label-caps text-[10px] tracking-wider">Oracle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-tertiary-fixed-dim transition-all active:scale-110 duration-300" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="public">play_circle</span>
+<span class="font-label-caps text-[10px] tracking-wider">Celestial Player</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-tertiary-fixed-dim transition-all active:scale-110 duration-300" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="auto_stories">history</span>
+<span class="font-label-caps text-[10px] tracking-wider">Archive</span>
+</a>
+</nav>
+<!-- Small decorative logo in bottom left as per reference -->
+<div class="fixed bottom-8 left-8 w-10 h-10 rounded-full bg-surface-container-low border border-tertiary/20 flex items-center justify-center z-30 hidden md:flex opacity-50 hover:opacity-100 transition-opacity">
+<span class="font-display-lg text-headline-sm text-on-surface">N'</span>
+</div>
+</body></html>
