@@ -13,13 +13,7 @@ export default function Home() {
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [currentMood, setCurrentMood] = useState<Mood | null>(null);
 
-  const handleSongReveal = (song: Song, mood: Mood) => {
-    setCurrentSong(song);
-    setCurrentMood(mood);
-    setActiveTab("player");
-  };
-
-  const handlePlayFromArchive = (song: Song, mood: Mood) => {
+  const handlePlaySong = (song: Song, mood: Mood) => {
     setCurrentSong(song);
     setCurrentMood(mood);
     setActiveTab("player");
@@ -39,7 +33,7 @@ export default function Home() {
             transition={{ duration: 0.28, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <OracleTab onSongReveal={handleSongReveal} />
+            <OracleTab onSongReveal={handlePlaySong} />
           </motion.div>
         )}
 
@@ -71,7 +65,7 @@ export default function Home() {
             className="absolute inset-0"
           >
             <ArchiveTab
-              onPlaySong={handlePlayFromArchive}
+              onPlaySong={handlePlaySong}
               onNewCard={() => setActiveTab("oracle")}
             />
           </motion.div>
